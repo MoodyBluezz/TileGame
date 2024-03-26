@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c6d54718622c514b9296b4decc37788, type: 3}
+  m_Name: Numbers
+  m_EditorClassIdentifier: 
+  _tileData:
+  - {fileID: 11400000, guid: e1c1176c85eecb945b1ee531855dca81, type: 2}
+  - {fileID: 11400000, guid: 189ac3c915cbcee4ba68404067c5d851, type: 2}
+  - {fileID: 11400000, guid: d3e5eca3c789c0542a966403cbfe161c, type: 2}
+  - {fileID: 11400000, guid: 411ddd346a770974e8af7ab0a04a8241, type: 2}
+  - {fileID: 11400000, guid: a58e96025f9e8974b8288aac180cf451, type: 2}
+  - {fileID: 11400000, guid: 54170da21ba62fc4391fcdfa238d39f8, type: 2}
+  - {fileID: 11400000, guid: 94a0dfaaa8c094448a0252441193477a, type: 2}
+  - {fileID: 11400000, guid: 77c53a42085e4a946908bd842e53e1ac, type: 2}
+  - {fileID: 11400000, guid: 339b0412eb4db0441bba3a30f4252259, type: 2}
+  - {fileID: 11400000, guid: bf8e37e9888d1004c97ade04cf5d3fed, type: 2}

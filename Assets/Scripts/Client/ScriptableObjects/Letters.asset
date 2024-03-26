@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c6d54718622c514b9296b4decc37788, type: 3}
-  m_Name: Tiles
+  m_Name: Letters
   m_EditorClassIdentifier: 
   _tileData:
   - {fileID: 11400000, guid: 2a3a7b15957cb5b418f81302d63c6e8e, type: 2}

@@ -5,10 +5,10 @@ namespace Client
 {
 	public class SpawnTiles : MonoBehaviour
 	{
-		[SerializeField] private TaskManager taskGenerator;
+		[SerializeField] private ModeSelector _modeSelector;
+		[SerializeField] private TaskManager _taskGenerator;
 		[SerializeField] private TileAppearance _slotAppearance;
 		[SerializeField] private int _tileCount;
-		[SerializeField] private TileScriptableObject visualizationSets;
 		[SerializeField] private TileInteraction _tileInteraction;
 		[SerializeField] private TileDataItem _tileDataItem;
 
@@ -17,54 +17,77 @@ namespace Client
 
 		private void Start()
 		{
-			SpawnTileItems();
+			SpawnTileItems(_modeSelector.TileScriptableObjects);
 			GetTaskText();
 			ShowTilesSequentially();
 		}
 
-		private void SpawnTileItems()
+		private void SpawnTileItems(TileScriptableObject tileScriptableObject)
 		{
 			_usedIndices.Clear();
 
 			for (int i = 0; i < _tileCount; i++)
 			{
-				if (i >= 0 && i < visualizationSets.TileDatas.Length)
+				if (i >= 0 && i < tileScriptableObject.TileDatas.Length)
 				{
-					int randomDataIndex;
-					do
-					{
-						randomDataIndex = UnityEngine.Random.Range(0, visualizationSets.TileDatas.Length);
-					}
-					while (_usedIndices.Contains(randomDataIndex));
+					int randomDataIndex = GetUniqueRandomIndex(tileScriptableObject.TileDatas.Length);
 
-					_usedIndices.Add(randomDataIndex);
-
-					var itemData = visualizationSets.TileDatas[randomDataIndex];
+					var itemData = tileScriptableObject.TileDatas[randomDataIndex];
 					var tileDataItem = Instantiate(_tileDataItem, transform);
 
-					if (!_tileInteraction.TileIdenfier.Contains(itemData.TileIdentifier))
-					{
-						tileDataItem.SetUpData(itemData);
-						_tilesList.Add(tileDataItem);
-					}
-					else
-					{
-						var generate = UnityEngine.Random.Range(0, visualizationSets.TileDatas.Length);
-						itemData = visualizationSets.TileDatas[generate];
-						tileDataItem.SetUpData(itemData);
-						_tilesList.Add(tileDataItem);
-					}
+					ProcessTileItem(tileScriptableObject, itemData, tileDataItem);
 				}
 			}
 			_tileInteraction.GetTileButtons(_tilesList);
 		}
 
+		private int GetUniqueRandomIndex(int maxIndex)
+		{
+			int randomDataIndex;
+			do
+			{
+				randomDataIndex = UnityEngine.Random.Range(0, maxIndex);
+			}
+			while (_usedIndices.Contains(randomDataIndex));
+
+			_usedIndices.Add(randomDataIndex);
+
+			return randomDataIndex;
+		}
+
+		private void ProcessTileItem(TileScriptableObject tileScriptableObject, TileData itemData, TileDataItem tileDataItem)
+		{
+			bool hasSameIdentifier = CheckForDuplicateIdentifier(itemData.TileIdentifier);
+
+			if (!hasSameIdentifier)
+			{
+				tileDataItem.SetUpData(itemData);
+				_tilesList.Add(tileDataItem);
+			}
+			else
+			{
+				HandleDuplicateTile(tileScriptableObject, itemData, tileDataItem);
+			}
+		}
+
+		private bool CheckForDuplicateIdentifier(string identifier)
+		{
+			return _tilesList.Exists(tile => tile.Identifier == identifier);
+		}
+
+		private void HandleDuplicateTile(TileScriptableObject tileScriptableObject, TileData itemData, TileDataItem tileDataItem)
+		{
+			int randomDataIndex = UnityEngine.Random.Range(0, tileScriptableObject.TileDatas.Length);
+			itemData = tileScriptableObject.TileDatas[randomDataIndex];
+			tileDataItem.SetUpData(itemData);
+			_tilesList.Add(tileDataItem);
+		}
 
 		private void GetTaskText()
 		{
 			int randomIndex = UnityEngine.Random.Range(0, _tilesList.Count);
 			string taskText = _tilesList[randomIndex].Identifier;
-			taskGenerator.SetTaskText(taskText);
+			_taskGenerator.SetTaskText(taskText);
 		}
 
 		private void ShowTilesSequentially()
