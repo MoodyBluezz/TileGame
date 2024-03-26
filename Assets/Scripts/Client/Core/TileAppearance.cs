@@ -38,7 +38,8 @@ public class TileAppearance : MonoBehaviour
 
 		foreach (CanvasGroup canvasGroup in canvasGroups)
 		{
-			_sequence.Append(canvasGroup.DOFade(1, _sequenceFadeDuration));
+			_sequence.Append(canvasGroup.DOFade(1, _sequenceFadeDuration))
+				.OnComplete(() => BounceOnComplete(canvasGroups));
 		}
 	}
 
@@ -57,6 +58,14 @@ public class TileAppearance : MonoBehaviour
 		canvasGroup.transform.DOScale(Vector3.one * 1.2f, 0.3f)
 			.SetEase(Ease.InBounce)
 			.OnComplete(() => canvasGroup.transform.DOScale(Vector3.one, 0.3f));
+	}
+
+	private void BounceOnComplete(CanvasGroup[] canvasGroups)
+	{
+		foreach (CanvasGroup canvasGroup in canvasGroups)
+		{
+			ScaleInBounce(canvasGroup);
+		}
 	}
 
 	private void Fade(CanvasGroup canvasGroup, float targetAlpha, float duration)

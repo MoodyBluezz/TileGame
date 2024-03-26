@@ -2,24 +2,27 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class Restart : MonoBehaviour
+namespace Client
 {
-	[SerializeField] private Button _restartButton;
-
-	private void OnEnable()
+	public class Restart : MonoBehaviour
 	{
-		_restartButton.onClick.AddListener(RestartScene);
-	}
+		[SerializeField] private Button _restartButton;
 
-	private void OnDisable()
-	{
-		_restartButton.onClick.RemoveListener(RestartScene);
-	}
+		private void OnEnable()
+		{
+			_restartButton.onClick.AddListener(RestartScene);
+		}
 
-	private void RestartScene()
-	{
-		var sceneID = SceneManager.GetActiveScene();
-		SceneManager.UnloadSceneAsync(sceneID);
-		SceneManager.LoadSceneAsync(sceneID.buildIndex);
+		private void OnDisable()
+		{
+			_restartButton.onClick.RemoveListener(RestartScene);
+		}
+
+		private void RestartScene()
+		{
+			var sceneID = SceneManager.GetActiveScene();
+			SceneManager.UnloadSceneAsync(sceneID);
+			SceneManager.LoadSceneAsync(sceneID.buildIndex);
+		}
 	}
 }

@@ -1,88 +1,82 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnTiles : MonoBehaviour
+namespace Client
 {
-	public event Action TileSpawned;
-
-	[SerializeField] private TaskManager taskGenerator;
-	[SerializeField] private TileAppearance _slotAppearance;
-    [SerializeField] private int _tileCount;
-	[SerializeField] private TileScriptableObject visualizationSets;
-	[SerializeField] private TileInteraction _tileInteraction;
-
-	public List<TileData> tilesList { get; private set; } = new();
-
-	private TileData _currentTileData;
-	private string _taskText = "";
-
-	private void Start()
+	public class SpawnTiles : MonoBehaviour
 	{
-		SwitchVisualizationSet();
-		GetTaskText();
-		ShowTiles();
-		ShowTilesBounced();
-	}
+		[SerializeField] private TaskManager taskGenerator;
+		[SerializeField] private TileAppearance _slotAppearance;
+		[SerializeField] private int _tileCount;
+		[SerializeField] private TileScriptableObject visualizationSets;
+		[SerializeField] private TileInteraction _tileInteraction;
+		[SerializeField] private TileDataItem _tileDataItem;
 
-	private void SwitchVisualizationSet()
-	{
-		for(int i = 0; i < _tileCount; i++)
+		private List<TileDataItem> _tilesList = new();
+		private HashSet<int> _usedIndices = new();
+
+		private void Start()
 		{
-			if (i >= 0 && i < visualizationSets.Tiles.Length)
+			SpawnTileItems();
+			GetTaskText();
+			ShowTilesSequentially();
+		}
+
+		private void SpawnTileItems()
+		{
+			_usedIndices.Clear();
+
+			for (int i = 0; i < _tileCount; i++)
 			{
-				_currentTileData = Instantiate(visualizationSets.Tiles[i], transform);
-				tilesList.Add(_currentTileData);
-			}
-		}
-		TileSpawned?.Invoke();
-	}
-
-	private void ShowTiles()
-	{
-		CanvasGroup[] canvasGroups = new CanvasGroup[tilesList.Count];
-
-		for (int i = 0; i < tilesList.Count; i++)
-		{
-			canvasGroups[i] = tilesList[i].TileCanvasGroup;
-		}
-
-		_slotAppearance.FadeOutSequentially(canvasGroups);
-	}
-
-	private void ShowTilesBounced()
-	{
-		CanvasGroup[] canvasGroups = new CanvasGroup[tilesList.Count];
-
-		for (int i = 0; i < tilesList.Count; i++)
-		{
-			canvasGroups[i] = tilesList[i].TileCanvasGroup;
-			_slotAppearance.ScaleInBounce(canvasGroups[i]);
-		}
-	}
-
-	private void GetTaskText()
-	{
-		var generatedID = GetRandomNumber();
-
-		_taskText = tilesList[generatedID].TileIdentifier;
-
-		if (_tileInteraction.TileIdenfier.Count > 0)
-		{
-			foreach (var identifier in _tileInteraction.TileIdenfier)
-			{
-				if (identifier == _taskText)
+				if (i >= 0 && i < visualizationSets.TileDatas.Length)
 				{
-					_taskText = tilesList[generatedID].TileIdentifier;
+					int randomDataIndex;
+					do
+					{
+						randomDataIndex = UnityEngine.Random.Range(0, visualizationSets.TileDatas.Length);
+					}
+					while (_usedIndices.Contains(randomDataIndex));
+
+					_usedIndices.Add(randomDataIndex);
+
+					var itemData = visualizationSets.TileDatas[randomDataIndex];
+					var tileDataItem = Instantiate(_tileDataItem, transform);
+
+					if (!_tileInteraction.TileIdenfier.Contains(itemData.TileIdentifier))
+					{
+						tileDataItem.SetUpData(itemData);
+						_tilesList.Add(tileDataItem);
+					}
+					else
+					{
+						var generate = UnityEngine.Random.Range(0, visualizationSets.TileDatas.Length);
+						itemData = visualizationSets.TileDatas[generate];
+						tileDataItem.SetUpData(itemData);
+						_tilesList.Add(tileDataItem);
+					}
 				}
 			}
+			_tileInteraction.GetTileButtons(_tilesList);
 		}
 
-		taskGenerator.SetTaskText(_taskText);
-	}
 
-	private int GetRandomNumber()
-	{
-		return UnityEngine.Random.Range(0, tilesList.Count);
+		private void GetTaskText()
+		{
+			int randomIndex = UnityEngine.Random.Range(0, _tilesList.Count);
+			string taskText = _tilesList[randomIndex].Identifier;
+			taskGenerator.SetTaskText(taskText);
+		}
+
+		private void ShowTilesSequentially()
+		{
+			CanvasGroup[] canvasGroups = new CanvasGroup[_tilesList.Count];
+
+			for (int i = 0; i < _tilesList.Count; i++)
+			{
+				canvasGroups[i] = _tilesList[i].TileCanvasGroup;
+			}
+
+			_slotAppearance.FadeOutSequentially(canvasGroups);
+		}
 	}
 }

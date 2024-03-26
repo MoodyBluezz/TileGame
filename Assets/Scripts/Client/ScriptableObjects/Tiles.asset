@@ -12,8 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c6d54718622c514b9296b4decc37788, type: 3}
   m_Name: Tiles
   m_EditorClassIdentifier: 
-  _tiles:
-  - {fileID: -5773695010595616351, guid: f48b33d2c0b788d48933a44cb2f80261, type: 3}
-  - {fileID: 338281305690714669, guid: e282449e6364cff41aa233ad95aa1fc6, type: 3}
-  - {fileID: -7019209341351809766, guid: 1123db81e24d1694cb3f627d82d4e465, type: 3}
-  - {fileID: 6462028502982294002, guid: 02183e83b51f2a9429332ad3fbf21de5, type: 3}
+  _tileData:
+  - {fileID: 11400000, guid: 2a3a7b15957cb5b418f81302d63c6e8e, type: 2}
+  - {fileID: 11400000, guid: c03242d3fe0d4444fa5ab12f1b6040d2, type: 2}
+  - {fileID: 11400000, guid: ec56770b42543504da24c84cca7b2219, type: 2}
+  - {fileID: 11400000, guid: ba3469e27ed647244840faf58737bc62, type: 2}
+  - {fileID: 11400000, guid: 1df0af59f06c86d4cb7101c31de712f7, type: 2}
+  - {fileID: 11400000, guid: 7662d9950337f9a43b93f5daa9ea94c7, type: 2}
+  - {fileID: 11400000, guid: 215a5486f83b52f47b65c31183523ccd, type: 2}
+  - {fileID: 11400000, guid: f114a91b3844c9643b07c5816d80ff7e, type: 2}
+  - {fileID: 11400000, guid: 855b06c7b1b54904c948da3223d4aac9, type: 2}
+  - {fileID: 11400000, guid: 674f880042b70de41a9a8704ab271214, type: 2}
+  - {fileID: 11400000, guid: b984d4e66b8c39947b160afa0e9aa058, type: 2}
+  - {fileID: 11400000, guid: 6d68be67d132d0e43a853d906a0db561, type: 2}
+  - {fileID: 11400000, guid: e1176448ae64ce94ebe22d3ede78f74d, type: 2}
+  - {fileID: 11400000, guid: 41a086e88407cde4c974068c3a50823c, type: 2}
+  - {fileID: 11400000, guid: 858044e29ff463548ad5493e46c9b82b, type: 2}
+  - {fileID: 11400000, guid: 4d36dc3a26cf6a446b920aee5961c56e, type: 2}
+  - {fileID: 11400000, guid: 2550f0df2b865d04aaf11ecd6c81cef9, type: 2}
+  - {fileID: 11400000, guid: e3b2e317bd5327746be08ce3a82f5b31, type: 2}
+  - {fileID: 11400000, guid: 245aa01478d0e374e9b85477a6a42e57, type: 2}
+  - {fileID: 11400000, guid: d4a21dffc3edda64a8c2ebabdca4ea95, type: 2}
+  - {fileID: 11400000, guid: 5eba86afd860ec843af8c5564645c268, type: 2}
+  - {fileID: 11400000, guid: 6d2bfffaa472c054fa3da81cdc2f4562, type: 2}
+  - {fileID: 11400000, guid: c7a3c3562fe294f4493ffc810c284f2f, type: 2}
+  - {fileID: 11400000, guid: cef2df624c6b14b48bee9c2a4940b1ae, type: 2}
+  - {fileID: 11400000, guid: 63d7e557f96dc6440ad55985cd677b4c, type: 2}
+  - {fileID: 11400000, guid: 086a8047c2ddbb3458de47b8fa15d6bd, type: 2}

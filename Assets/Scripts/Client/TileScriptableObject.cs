@@ -1,9 +1,12 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tile Set", menuName = "Custom/Tile Set")]
-public class TileScriptableObject : ScriptableObject
-{
-	[SerializeField] private TileData[] _tiles;
+namespace Client 
+{ 
+	[CreateAssetMenu(fileName = "Tile Set", menuName = "Custom/Tile Set")]
+	public class TileScriptableObject : ScriptableObject
+	{
+		[SerializeField] private TileData[] _tileData;
 
-	public TileData[] Tiles => _tiles;
+		public TileData[] TileDatas => _tileData;
+	}
 }
